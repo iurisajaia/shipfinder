@@ -161,9 +161,14 @@
                                         "type": "integer",
                                         "description": "verification Code",
                                         "example": 123456
+                                    },
+                                    "phone": {
+                                        "type": "integer",
+                                        "description": "verification Code",
+                                        "example": "+1234567890"
                                     }
                                 },
-                                "required": ["user_id", "otp"]
+                                "required": ["phone", "otp"]
                             }
                         }
                     }

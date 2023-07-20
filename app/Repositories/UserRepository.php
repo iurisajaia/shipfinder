@@ -22,6 +22,9 @@ class UserRepository implements  UserRepositoryInterface{
 
     public function createUser(CreateUserRequest $request) : JsonResponse{
 
+        $user = User::query()->where('phone', $request->phone)->first();
+        if($user) return response()->json(['error' => 'User already exists', 401]);
+
         // check if phone number is verified
         $phoneOtp  = PhoneOtp::where('phone_number', $request->phone)->whereNotNull('verified_at')->first();
 
@@ -58,6 +61,10 @@ class UserRepository implements  UserRepositoryInterface{
     }
 
     public function getLoginCode(GetLoginCodeRequest $request) : JsonResponse{
+        $user = User::query()->where('phone', $request->phone)->first();
+
+        if($user) return response()->json(['error' => 'User already exists', 401]);
+
         $phone = $request->phone;
         $code = 123456; // rand(123456, 999999);
 

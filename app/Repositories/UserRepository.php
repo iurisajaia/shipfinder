@@ -1,18 +1,14 @@
 <?php
 
 namespace App\Repositories;
-use App\Models\Car;
 use App\Models\PhoneOtp;
-use App\Models\Trailer;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Repositories\Interfaces\CarRepositoryInterface;
 use App\Http\Requests\GetLoginCodeRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\VerifyUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Models\Language;
 use App\Models\UserRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -164,22 +160,8 @@ class UserRepository implements  UserRepositoryInterface{
 
     public function currentUser(Request $request): JsonResponse{
         try {
-            $ruser = $request->user();
 
-            if(!$ruser){
-                return response()->json([
-                    'error' => 'Cannot find user',
-                    'status' => 401
-                ]);
-            }
-
-
-            $user = User::query()->with(['role', 'media', 'languages', ...$this->roles[$ruser->user_role_id]])->findOrFail($ruser->id);
-
-
-            return response()->json([
-                'user' => $user
-            ], 200);
+            return response()->json($request->user(), 200);
 
         }catch(Exception $e)
         {

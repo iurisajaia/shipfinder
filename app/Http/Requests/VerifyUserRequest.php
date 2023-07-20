@@ -26,6 +26,7 @@ class VerifyUserRequest extends FormRequest
     public function rules()
     {
         return [
+            'phone' => 'required|string',
             'otp' => 'required|integer'
         ];
     }

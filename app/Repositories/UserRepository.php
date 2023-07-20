@@ -2,11 +2,7 @@
 
 namespace App\Repositories;
 use App\Models\Car;
-use App\Models\CustomerDetails;
-use App\Models\DriverUserDetails;
-use App\Models\ForwarderDetails;
-use App\Models\LegalUserDetails;
-use App\Models\StandardUserDetails;
+use App\Models\PhoneOtp;
 use App\Models\Trailer;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\CarRepositoryInterface;
@@ -18,8 +14,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Language;
 use App\Models\UserRole;
-use App\Models\UserOtp;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Twilio\Rest\Client;
 use App\Models\User;
 
@@ -27,136 +23,28 @@ use App\Models\User;
 
 class UserRepository implements  UserRepositoryInterface{
 
-    private CarRepositoryInterface $carRepository;
-
-    public function __construct(
-        CarRepositoryInterface $carRepository,
-    ){
-        $this->carRepository = $carRepository;
-    }
-
-    public array $roles = [
-        1 => ['standard'],
-        2 => ['legal'],
-        3 => ['forwarder'],
-        4 => ['driver', 'driver.car' ,'driver.trailer'],
-        5 => ['customer']
-    ];
-
-
-    public function createUserData(CreateUserRequest $request, $id = null){
-        $data = [
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'user_role_id' => $request->user_role_id
-        ];
-
-        $user = User::updateOrCreate(['id' => $id], $data);
-
-        if (isset($request['languages'])) {
-            $languages = Language::whereIn('id', $request['languages'])->get();
-            $user->languages()->sync($languages);
-        }
-
-        if(isset($request->images)){
-            foreach ($request->images as $key => $image){
-                if($request->id){
-                    $existingMedia = $user->getMedia($image['title'])->first();
-                    if ($existingMedia) {
-                        $existingMedia->delete();
-                    }
-                }
-                $user->addMediaFromRequest("images.{$key}.uri")->toMediaCollection($image['title']);
-            }
-        }
-
-        if($data['user_role_id'] == 1 && isset($request->standard)){
-            StandardUserDetails::updateOrCreate(['user_id' => $user->id], $request->standard);
-        }
-        if($data['user_role_id'] == 2 && isset($request->legal)){
-            LegalUserDetails::updateOrCreate(['user_id' => $user->id], $request->legal);
-        }
-        if($data['user_role_id'] == 3 && isset($request->forwarder)){
-            ForwarderDetails::updateOrCreate(['user_id' => $user->id], $request->forwarder);
-        }
-        if($data['user_role_id'] == 4 && isset($request->driver)){
-            $this->createDriverType($request, $user);
-        }
-        if($data['user_role_id'] == 5 && isset($request->customer)){
-            CustomerDetails::updateOrCreate(['user_id' => $user->id], $request->customer);
-        }
-
-        return $user;
-    }
-
-    public function createDriverType($request, $user){
-
-        $driver = DriverUserDetails::updateOrCreate(['user_id' => $user->id], [
-            'telegram' => $request->driver['telegram'] ?? '',
-            'whatsapp' => $request->driver['whatsapp'] ?? '',
-            'viber' => $request->driver['viber'] ?? '',
-            'referral_code' => $request->driver['referral_code'] ?? '',
-            'iban' => $request->driver['iban'] ?? '',
-            'user_id' => $user->id
-        ]);
-
-        if(isset($request->driver['car'])){
-            $this->createCar($request,$driver);
-        }
-
-        if(isset($request->driver['trailer'])){
-            $this->createTrailer($request,$driver);
-        }
-    }
-
-    public function createCar($request, $driver){
-        if(isset($request->driver['car']['id'])){
-            $car = Car::findOrFail($request->driver['car']['id']);
-        }else{
-            $car = new Car();
-        }
-        $car->number = $request->driver['car']['number'] ?? '';
-        $car->title = $request->driver['car']['title'] ?? '';
-        $car->model = $request->driver['car']['model'] ?? '';
-        $car->identification_number = $request->driver['car']['identification_number'] ?? '';
-        $car->car_type_id = $request->driver['car']['car_type_id'];
-        $car->save();
-
-        $driver->car_id = $car->id;
-        $driver->save();
-    }
-
-    public function createTrailer($request, $driver){
-        if(isset($request->driver['trailer']['id'])){
-            $trailer = Trailer::findOrFail($request->driver['trailer']['id']);
-        }else{
-            $trailer = new Trailer();
-        }
-        $trailer->number = $request->driver['trailer']['number'] ?? '';
-        $trailer->title = $request->driver['trailer']['title'] ?? '';
-        $trailer->model = $request->driver['trailer']['model'] ?? '';
-        $trailer->identification_number = $request->driver['trailer']['identification_number'] ?? '';
-        $trailer->trailer_type_id = $request->driver['trailer']['trailer_type_id'];
-        $trailer->save();
-
-        $driver->trailer_id = $trailer->id;
-        $driver->save();
-
-    }
 
     public function createUser(CreateUserRequest $request) : JsonResponse{
 
-        if(is_null($request->user())){
-            return response()->json(['error' => 'Cannot find user'], 404);
+        // check if phone number is verified
+        $phoneOtp  = PhoneOtp::where('phone_number', $request->phone)->whereNotNull('verified_at')->first();
+
+        if(!isset($phoneOtp)){
+            return response()->json(['error' => 'Phone number is not verified'], 404);
         }
 
-        $user = User::updateOrCreate(['id' => $request->user()->id], $request->all());
+        $user = User::create([
+            ...$request->all(),
+            'password' => Hash::make($request['password']),
+            'phone_verified_at' => now()
+        ]);
 
+        $phoneOtp->delete(); // clear Phone Numbers table
 
         return response()->json([
             'message' => 'User Created Successfully',
             'user' => $user,
+            'token' => $user->createToken("API TOKEN")->plainTextToken
         ], 200);
 
     }
@@ -174,86 +62,52 @@ class UserRepository implements  UserRepositoryInterface{
     }
 
     public function getLoginCode(GetLoginCodeRequest $request) : JsonResponse{
-        $user = User::query()->where('phone' , $request->phone)->first();
+        $phone = $request->phone;
+        $code = 123456; // rand(123456, 999999);
 
-        if(!isset($user)){
-            $user = new User(['phone' => $request->phone]);
-            $user->save();
-            $code = 123456; // rand(123456, 999999);
+        PhoneOtp::updateOrCreate(['phone_number' => $phone], [
+            'phone_number' => $phone,
+            'otp' => $code,
+            'expire_at' => now()->addMinutes(10)
+        ]);
 
-            UserOtp::create([
-                'user_id' => $user->id,
-                'otp' => $code,
-                'expire_at' => now()->addMinutes(10)
-            ]);
-
-            return response()->json(['message' => 'code sent successfully', 'user' => $user, 'token' => $user->createToken("API TOKEN")->plainTextToken]);
-        }
-
-        return response()->json($user);
-
+        return response()->json(['message' => 'code sent successfully']);
     }
 
     public function loginUser(LoginUserRequest $request) : JsonResponse{
 
-        $user = User::where('phone', $request->phone)->first();
-        if(!isset($user)){
-            return response()->json(['error' => 'Cannot find user'], 404);
-        }
-
-//        $userOtp = UserOtp::where('user_id', $user->id)->where('otp', $request->otp)->first();
-
-//        $this->checkForOtpError($userOtp);
-
-        if($user){
-
-//            $userOtp->update([
-//                'expire_at' => now()
-//            ]);
-
+        if (Auth::attempt(['phone' => $request->phone, 'password' => $request->password])) {
+            $user = Auth::user();
             return response()->json([
-                'status' => true,
-                'message' => 'User Logged In Successfully',
+                'message' => 'User Logged in successfully',
+                'user' => $user,
                 'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
-        }else{
-            return response()->json(['error' => 'Cannot find user'], 404);
+            ]);
         }
+
+        return response()->json(['message' => 'Invalid credentials'], 401);
     }
 
     public function verifyUser(VerifyUserRequest $request) : JsonResponse{
-        if(is_null($request->user())){
-            return response()->json(['error' => 'Cannot find user'], 404);
-        }
 
+        $phoneOtp  = PhoneOtp::where('phone_number', $request->phone)->where('otp', $request->otp)->first();
 
-
-        $userOtp  = UserOtp::where('user_id', $request->user()->id)->where('otp', $request->otp)->first();
-
-        if(!isset($userOtp)){
+        if(!isset($phoneOtp)){
             return response()->json(['error' => 'Something went wrong'], 404);
         }
 
-        $this->checkForOtpError($userOtp);
+        $this->checkForOtpError($phoneOtp);
 
-        $user = User::whereId($request->user()->id)->first();
 
-        if($user){
+        $phoneOtp->update([
+            'expire_at' => now(),
+            'verified_at' => now(),
+        ]);
 
-            $userOtp->update([
-                'expire_at' => now()
-            ]);
-
-            $user->phone_verified_at = now();
-            $user->save();
-
-            return response()->json([
-                'status' => 200,
-                'message' => 'User verified successfully'
-            ]);
-        }else{
-            return response()->json(['error' => 'Cannot find user'],404);
-        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Phone verified successfully'
+        ]);
     }
 
     public function checkForOtpError($userOtp){

@@ -28,13 +28,12 @@ class CreateUserRequest extends FormRequest
 
         return [
             [
-                'name' => 'string',
+                'firstname' => 'string',
+                'lastname' => 'string',
                 'phone' => 'required|string',
                 'email' => 'string',
-                'user_role_id' => 'required|number',
-                'images' => '',
-                'languages' => 'array',
-                'languages.*' => 'integer',
+                'user_role_id' => 'number',
+                'password' => 'required|string',
             ]
         ];
     }
@@ -58,7 +57,8 @@ class CreateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'phone.required' => 'Phone is required!'
+            'phone.required' => 'Phone is required!',
+            'password.required' => 'Password is required!'
         ];
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class GetLoginCodeRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *

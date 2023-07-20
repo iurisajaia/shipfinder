@@ -26,8 +26,8 @@ class LoginUserRequest extends FormRequest
     public function rules()
     {
         return [
-                'phone' => 'required',
-                'otp' => 'required|string'
+                'phone' => 'required|string',
+                'password' => 'required|string'
         ];
     }
 
@@ -51,7 +51,7 @@ class LoginUserRequest extends FormRequest
     {
         return [
             'phone.required' => 'Phone is required!',
-            'otp.required' => 'OTP code is required'
+            'password.required' => 'Password is required'
         ];
     }
 }

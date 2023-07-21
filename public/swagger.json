@@ -151,6 +151,23 @@
                 }
             }
         },
+        "/api/user/roles": {
+            "get": {
+                "tags" : ["User"],
+                "summary": "User Roles",
+                "responses": {
+                    "200": {
+                        "description": "User Roles fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/api/user/verify": {
             "post": {
                 "tags" : ["Auth"],

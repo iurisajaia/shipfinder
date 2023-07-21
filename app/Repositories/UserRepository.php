@@ -151,12 +151,9 @@ class UserRepository implements  UserRepositoryInterface{
         }
     }
 
-    public function getUserRoles(): JsonResponse{
+    public function getUserRoles(){
         try {
-            return response()->json([
-                'data' => UserRole::query()->where('is_visible' , 1)->get(),
-                'status' => true
-            ], 200);
+            return UserRole::query()->where('is_visible' , 1)->get();
         }catch(Exception $e)
         {
             return response()->json([

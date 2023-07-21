@@ -59,6 +59,16 @@
                                         "type": "integer",
                                         "description": "User's role ID",
                                         "example": 1
+                                    },
+                                    "legal_name" : {
+                                        "type": "string",
+                                        "description": "Legal name",
+                                        "example": "Re:soft"
+                                    },
+                                    "legal_id" : {
+                                        "type": "string",
+                                        "description": "Legal ID",
+                                        "example": "3133"
                                     }
                                 },
                                 "required": ["phone", "password"]

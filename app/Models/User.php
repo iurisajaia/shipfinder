@@ -37,7 +37,9 @@ class User extends Authenticatable implements HasMedia, FilamentUser
         'password',
         'user_role_id',
         'phone',
-        'user_data_is_verified'
+        'user_data_is_verified',
+        'company_name',
+        'company_id'
     ];
 
     /**

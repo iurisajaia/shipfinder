@@ -89,6 +89,87 @@
                 }
             }
         },
+        "/api/user/create/driver": {
+            "post": {
+                "tags" : ["User"],
+                "summary": "Create Driver",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "firstname": {
+                                        "type": "string",
+                                        "description": "User's name",
+                                        "example": "John"
+                                    },
+                                    "lastname": {
+                                        "type": "string",
+                                        "description": "User's last name",
+                                        "example": "Doe"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "description": "User's phone number",
+                                        "example": "+1234567890"
+                                    },
+                                    "room": {
+                                        "type": "string",
+                                        "description": "Room",
+                                        "example": "12AA333"
+                                    },
+                                    "series": {
+                                        "type": "string",
+                                        "description": "Series",
+                                        "example": "12AA333"
+                                    },
+                                    "issued_by": {
+                                        "type": "string",
+                                        "description": "Issued By",
+                                        "example": "12AA333"
+                                    },
+                                    "date_of_issue": {
+                                        "type": "string",
+                                        "description": "Date Of Issue",
+                                        "example": "12/22/2023"
+                                    },
+                                    "serial_number": {
+                                        "type": "string",
+                                        "description": "Serial Number",
+                                        "example": "A31AE"
+                                    },
+                                    "driver_passport": {
+                                        "type": "string",
+                                        "description": "Drivers Passport",
+                                        "example": "Upload File Using Form Data"
+                                    },
+                                    "drivers_license": {
+                                        "type": "string",
+                                        "description": "Drivers License",
+                                        "example": "Upload File Using Form Data"
+                                    }
+
+                                },
+                                "required": ["phone"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created successful"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/api/user/login/": {
             "post": {
                 "tags" : ["User"],

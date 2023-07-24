@@ -43,7 +43,7 @@ class LoginUserRequest extends FormRequest
 
             'data'      => $validator->errors()->messages()
 
-        ]));
+        ],401));
 
     }
 

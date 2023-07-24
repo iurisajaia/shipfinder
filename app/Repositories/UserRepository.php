@@ -96,7 +96,7 @@ class UserRepository implements  UserRepositoryInterface{
         $phoneOtp  = PhoneOtp::where('phone_number', $request->phone)->where('otp', $request->otp)->first();
 
         if(!isset($phoneOtp)){
-            return response()->json(['error' => 'Something went wrong'], 404);
+            return response()->json(['error' => 'Something went wrong'], 401);
         }
 
         $this->checkForOtpError($phoneOtp);

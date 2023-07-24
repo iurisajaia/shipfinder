@@ -138,6 +138,7 @@ return array(
     'App\\Http\\Requests\\VerifyUserRequest' => $baseDir . '/app/Http/Requests/VerifyUserRequest.php',
     'App\\Models\\Car' => $baseDir . '/app/Models/Car.php',
     'App\\Models\\CarType' => $baseDir . '/app/Models/CarType.php',
+    'App\\Models\\DriverInfo' => $baseDir . '/app/Models/DriverInfo.php',
     'App\\Models\\Language' => $baseDir . '/app/Models/Language.php',
     'App\\Models\\Message' => $baseDir . '/app/Models/Message.php',
     'App\\Models\\PhoneOtp' => $baseDir . '/app/Models/PhoneOtp.php',

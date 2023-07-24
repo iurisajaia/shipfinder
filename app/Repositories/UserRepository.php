@@ -164,8 +164,8 @@ class UserRepository implements  UserRepositoryInterface{
 
     public function currentUser(Request $request): JsonResponse{
         try {
-
-            return response()->json($request->user(), 200);
+            $user = User::with(['drivers' , 'drivers.driverInfo' , 'drivers.driverInfo.media'])->findOrFail($request->user()->id);
+            return response()->json($user, 200);
 
         }catch(Exception $e)
         {

@@ -879,6 +879,7 @@ class ComposerStaticInit13ea0274390bb8cd5b124d2f36e42ccb
         'App\\Http\\Requests\\VerifyUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/VerifyUserRequest.php',
         'App\\Models\\Car' => __DIR__ . '/../..' . '/app/Models/Car.php',
         'App\\Models\\CarType' => __DIR__ . '/../..' . '/app/Models/CarType.php',
+        'App\\Models\\DriverInfo' => __DIR__ . '/../..' . '/app/Models/DriverInfo.php',
         'App\\Models\\Language' => __DIR__ . '/../..' . '/app/Models/Language.php',
         'App\\Models\\Message' => __DIR__ . '/../..' . '/app/Models/Message.php',
         'App\\Models\\PhoneOtp' => __DIR__ . '/../..' . '/app/Models/PhoneOtp.php',

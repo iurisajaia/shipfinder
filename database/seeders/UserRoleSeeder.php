@@ -51,6 +51,14 @@ class UserRoleSeeder extends Seeder
                     'is_visible' => true
                 ],
                 [
+                    'id' => 5,
+                    'title' => [
+                        'eng' => 'Driver'
+                    ],
+                    'key' => 'driver',
+                    'is_visible' => false
+                ],
+                [
                     'id' => 6,
                     'title' => [
                         'eng' => 'Administrator',

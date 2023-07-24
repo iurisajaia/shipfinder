@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\DriverController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,6 +19,10 @@ Route::group(['prefix' => 'user'], function () {
         Route::put('/update', [UserController::class, 'update']);
         Route::get('/', [UserController::class , 'currentUser']);
         Route::delete('/delete/{id}', [UserController::class, 'delete']);
+
+        Route::group(['prefix' => 'driver'], function(){
+            Route::post('/create', [DriverController::class , 'create']);
+        });
     });
 
 });

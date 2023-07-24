@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,17 +31,7 @@ class User extends Authenticatable implements HasMedia, FilamentUser
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'firstname',
-        'lastname',
-        'email',
-        'password',
-        'user_role_id',
-        'phone',
-        'user_data_is_verified',
-        'company_name',
-        'company_id'
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -76,46 +67,19 @@ class User extends Authenticatable implements HasMedia, FilamentUser
         return $this->belongsTo(UserRole::class, 'user_role_id');
     }
 
-
-    public function languages(): BelongsToMany
+    public function drivers(): HasMany
     {
-        return $this->belongsToMany(Language::class, 'user_languages' );
+        return $this->hasMany(User::class , 'carrier_id');
     }
 
-    public function standard() : HasOne
+    public function driverInfo(): HasOne
     {
-        return $this->hasOne(StandardUserDetails::class);
+        return $this->hasOne(DriverInfo::class , 'id' , 'driver_info_id');
     }
 
-    public function driver() : HasOne
-    {
-        return $this->hasOne(DriverUserDetails::class);
-    }
 
-    public function legal() : HasOne
-    {
-        return $this->hasOne(LegalUserDetails::class);
-    }
 
-    public function forwarder() : HasOne
-    {
-        return $this->hasOne(ForwarderDetails::class);
-    }
 
-    public function customer() : HasOne
-    {
-        return $this->hasOne(CustomerDetails::class);
-    }
-
-    public function messages()
-    {
-        return $this->hasMany(Message::class, 'sender_id');
-    }
-
-    public function receivedMessages()
-    {
-        return $this->hasMany(Message::class, 'receiver_id');
-    }
 
 
 

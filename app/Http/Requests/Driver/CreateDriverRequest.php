@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\UserType;
+namespace App\Http\Requests\Driver;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CreateStandardUserRequest extends FormRequest
+class CreateDriverRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,18 +18,21 @@ class CreateStandardUserRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
+
         return [
             [
-                'lastName' => 'string',
-                'private_number' => 'string',
-                'position' => 'string',
+                'room' => 'string',
+                'series' => 'string',
+                'issued_by' => 'string',
+                'date_of_issue' => 'string',
+                'serial_number' => 'string',
+                'driver_passport' => 'string',
+                'drivers_license' => 'string',
+                'firstname' => 'string',
+                'lastname' => 'string',
+                'phone' => 'string|required',
             ]
         ];
     }
@@ -46,13 +49,14 @@ class CreateStandardUserRequest extends FormRequest
 
             'data'      => $validator->errors()->messages()
 
-        ]));
+        ], 401));
 
     }
 
     public function messages()
     {
         return [
+            'phone.required' => 'Phone is required!'
         ];
     }
 }

@@ -328,6 +328,58 @@
                     }
                 }
             }
+        },
+
+        "/api/car/body-types": {
+            "get": {
+                "tags" : ["Car"],
+                "summary": "Car Body Types",
+                "responses": {
+                    "200": {
+                        "description": "Body types fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/car/trailer-types": {
+            "get": {
+                "tags" : ["Car"],
+                "summary": "Car Trailer Types",
+                "responses": {
+                    "200": {
+                        "description": "Trailer types fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/car/loading-types": {
+            "get": {
+                "tags" : ["Car"],
+                "summary": "Car Loading Types",
+                "responses": {
+                    "200": {
+                        "description": "Loading types fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     }
 }

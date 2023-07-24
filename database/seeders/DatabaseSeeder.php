@@ -16,9 +16,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserRoleSeeder::class,
-            CarTypeSeeder::class,
             LanguageSeeder::class,
-            TrailerTypeSeeder::class
+            CarBodyTypeSeeder::class,
+            CarLoadingTypeSeeder::class,
+            CarTrailerTypeSeeder::class
         ]);
     }
 }

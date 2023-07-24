@@ -1,9 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\DriverController;
-use App\Http\Controllers\Api\CarController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CountryController;
+use App\Http\Controllers\Api\PaymentMethodsController;
 
 
 
@@ -31,5 +33,13 @@ Route::group(['prefix' => 'car'], function(){
     Route::get('/body-types', [CarController::class , 'getCarBodyTypes']);
     Route::get('/trailer-types', [CarController::class , 'getCarTrailerTypes']);
     Route::get('/loading-types', [CarController::class , 'getCarLoadingTypes']);
+});
+
+Route::group(['prefix' => 'payment-methods'], function(){
+    Route::get('/', [PaymentMethodsController::class , 'index']);
+});
+
+Route::group(['prefix' => 'country'], function(){
+    Route::get('/', [CountryController::class , 'index']);
 });
 

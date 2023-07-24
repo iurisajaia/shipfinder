@@ -380,6 +380,42 @@
                     }
                 }
             }
+        },
+
+        "/api/payment-methods": {
+            "get": {
+                "tags" : ["Payment Method"],
+                "summary": "Payment Methods",
+                "responses": {
+                    "200": {
+                        "description": "Payment Methods fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+
+        "/api/country": {
+            "get": {
+                "tags" : ["Country"],
+                "summary": "Countries list",
+                "responses": {
+                    "200": {
+                        "description": "Countries list fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     }
 }

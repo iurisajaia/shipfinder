@@ -28,13 +28,27 @@ class CreateCarRequest extends FormRequest
 
         return [
             [
-                'id' => 'integer',
-                'number' => 'string',
-                'title' => 'string',
+                'trailer_type_id' => 'integer',
+                'payment_method_id' => 'integer',
                 'model' => 'string',
-                'identification_number' => 'string',
-                'car_type_id' => 'integer',
-                'tech_passport' => 'nullable|file|mimes:jpeg,png,gif,pdf',
+                'description' => 'string',
+                'registration_number' => 'string',
+                'dimensions' => 'array',
+                'dimensions.length' => 'integer',
+                'dimensions.width' => 'integer',
+                'dimensions.height' => 'integer',
+                'dimensions.volume' => 'string',
+                'dimensions.capacity' => 'string',
+                'body_types' => 'array',
+                'body_types.*' => 'integer',
+                'loading_types' => 'array',
+                'loading_types.*' => 'integer',
+                'countries' => 'array',
+                'countries.*' => 'integer',
+                'drivers' => 'array',
+                'drivers.*' => 'integer',
+
+
             ]
         ];
     }
@@ -45,11 +59,11 @@ class CreateCarRequest extends FormRequest
 
         throw new HttpResponseException(response()->json([
 
-            'success'   => false,
+            'success' => false,
 
-            'message'   => 'Validation errors',
+            'message' => 'Validation errors',
 
-            'data'      => $validator->errors()->messages()
+            'data' => $validator->errors()->messages()
 
         ]));
 

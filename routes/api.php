@@ -30,6 +30,10 @@ Route::group(['prefix' => 'user'], function () {
 });
 
 Route::group(['prefix' => 'car'], function(){
+    Route::group(['middleware' => 'auth:sanctum'], function(){
+        Route::get('/', [CarController::class , 'index']);
+        Route::post('/create', [CarController::class , 'create']);
+    });
     Route::get('/body-types', [CarController::class , 'getCarBodyTypes']);
     Route::get('/trailer-types', [CarController::class , 'getCarTrailerTypes']);
     Route::get('/loading-types', [CarController::class , 'getCarLoadingTypes']);

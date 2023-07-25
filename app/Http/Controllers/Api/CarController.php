@@ -21,6 +21,9 @@ class CarController extends Controller
         $this->carRepository = $carRepository;
     }
 
+    public function index(Request $request){
+        return $this->carRepository->index($request);
+    }
 
     public function create(CreateCarRequest $request){
         return $this->carRepository->create($request);

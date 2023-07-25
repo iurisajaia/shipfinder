@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_languages', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->unsigned();
+        Schema::create('car_car_loading_types', function (Blueprint $table) {
+            $table->unsignedBigInteger('car_id')->unsigned();
 
-            $table->unsignedBigInteger('language_id')->unsigned();
+            $table->unsignedBigInteger('car_loading_type_id')->unsigned();
 
-            $table->foreign('user_id')->references('id')->on('users')
+            $table->foreign('car_id')->references('id')->on('cars')
 
                 ->onDelete('cascade');
 
-            $table->foreign('language_id')->references('id')->on('languages')
+            $table->foreign('car_loading_type_id')->references('id')->on('car_loading_types')
 
                 ->onDelete('cascade');
         });

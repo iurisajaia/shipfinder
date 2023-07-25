@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('trailer_types', function (Blueprint $table) {
+        Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->json('title');
-            $table->string('key')->nullable();
-            $table->string('icon_default')->nullable();
-            $table->string('icon_hover')->nullable();
+            $table->integer('user_id');
+            $table->string('model')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('trailer_type_id')->nullable();
+            $table->integer('payment_method_id')->nullable();
+            $table->string('registration_number')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trailer_types');
+        Schema::dropIfExists('cars');
     }
 };

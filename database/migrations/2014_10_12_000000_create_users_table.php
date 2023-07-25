@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
+            $table->string('legal_id')->nullable();
             $table->string('company_id')->nullable();
+            $table->string('legal_name')->nullable();
             $table->integer('carrier_id')->nullable();
             $table->string('company_name')->nullable();
             $table->string('temp_password')->nullable();

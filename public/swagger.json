@@ -91,6 +91,11 @@
         },
         "/api/user/create/driver": {
             "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
                 "tags" : ["User"],
                 "summary": "Create Driver",
                 "requestBody": {
@@ -330,6 +335,135 @@
             }
         },
 
+        "/api/car/create/": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags" : ["Car"],
+                "summary": "Create Car",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "trailer_type_id": {
+                                        "type": "integer",
+                                        "description": "Trailer Type Id",
+                                        "example": 1
+                                    },
+                                    "payment_method_id": {
+                                        "type": "integer",
+                                        "description": "Payment Method Id",
+                                        "example": 1
+                                    },
+                                    "model": {
+                                        "type": "string",
+                                        "description": "Car Model",
+                                        "example": "Opel"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Car description",
+                                        "example": "lorem ipsum long text"
+                                    },
+                                    "registration_number": {
+                                        "type": "string",
+                                        "description": "Car Registration Number",
+                                        "example": "A31AA34"
+                                    },
+                                    "dimensions": {
+                                        "type" : "object",
+                                        "properties": {
+                                            "width" : {
+                                                "type": "integer",
+                                                "description": "Car Width",
+                                                "example": 100
+                                            },
+                                            "height" : {
+                                                "type": "integer",
+                                                "description": "Car Height",
+                                                "example": 100
+                                            },
+                                            "length" : {
+                                                "type": "integer",
+                                                "description": "Car Length",
+                                                "example": 100
+                                            },
+                                            "volume" : {
+                                                "type": "string",
+                                                "description": "Car Volume",
+                                                "example": "100"
+                                            },
+                                            "capacity" : {
+                                                "type": "string",
+                                                "description": "Car Capacity",
+                                                "example": "120"
+
+                                            }
+
+                                        }
+                                    },
+                                    "body_types" : {
+                                        "type" : "array",
+                                        "description" : "Body Types array",
+                                        "example" : [1,2]
+                                    },
+                                    "loading_types" : {
+                                        "type" : "array",
+                                        "description" : "Loading Types array",
+                                        "example" : [1,2]
+                                    },
+                                    "countries" : {
+                                        "type" : "array",
+                                        "description" : "Countries array",
+                                        "example" : [1,2]
+                                    },
+                                    "drivers" : {
+                                        "type" : "array",
+                                        "description" : "User ID array",
+                                        "example" : [1,2]
+                                    }
+                                },
+                                "required": []
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created successful"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/car": {
+            "get": {
+                "tags" : ["Car"],
+                "summary": "User Cars",
+                "responses": {
+                    "200": {
+                        "description": "Cars fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/api/car/body-types": {
             "get": {
                 "tags" : ["Car"],
@@ -417,5 +551,7 @@
                 }
             }
         }
+
+
     }
 }

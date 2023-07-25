@@ -175,7 +175,7 @@
                 }
             }
         },
-        "/api/user/login/": {
+        "/api/user/login": {
             "post": {
                 "tags" : ["User"],
                 "summary": "Login User",
@@ -198,6 +198,41 @@
                                     }
                                 },
                                 "required": ["phone", "password"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Logged in successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/user/forgot-password": {
+            "post": {
+                "tags" : ["User"],
+                "summary": "Forgot Password",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "description": "User's phone number",
+                                        "example": "+1234567890"
+                                    }
+                                },
+                                "required": ["phone"]
                             }
                         }
                     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+use App\Http\Requests\ForgotPasswordRequest;
 use App\Models\PhoneOtp;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Http\Requests\GetLoginCodeRequest;
@@ -89,6 +90,19 @@ class UserRepository implements  UserRepositoryInterface{
         }
 
         return response()->json(['message' => 'Invalid credentials'], 401);
+    }
+
+    public function forgotPassword(ForgotPasswordRequest $request) : JsonResponse{
+        $phone = $request->phone;
+
+        $user = User::where('phone', $phone)->first();
+
+        if(!$user) return response()->json(['message' => 'Cannot find user'], 401);
+
+        if(!$user->email) return response()->json(['message' => "User doesn't have an email" ], 401);
+
+
+        return response()->json(['message' => 'Code sent successfully to ' . $user->email], 200);
     }
 
     public function verifyUser(VerifyUserRequest $request) : JsonResponse{

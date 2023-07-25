@@ -17,6 +17,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('/verify', [UserController::class, 'verify']);
     Route::post('/create', [UserController::class, 'create']);
     Route::post('/get-login-code', [UserController::class, 'getLoginCode']);
+    Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
 
     Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::put('/update', [UserController::class, 'update']);

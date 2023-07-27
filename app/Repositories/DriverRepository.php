@@ -47,6 +47,11 @@ class DriverRepository implements  DriverRepositoryInterface {
 
     public function create(CreateDriverRequest $request) : JsonResponse{
         try {
+
+            $existingDriver = User::where('phone' , $request->phone)->first();
+
+            if($existingDriver) return response()->json(['error' => 'Driver already exists with this phone number'], 500);
+
             $driverData = $request->only(['room', 'series', 'issued_by', 'date_of_issue', 'serial_number']);
             $userData = $request->only(['firstname', 'lastname', 'phone']);
 

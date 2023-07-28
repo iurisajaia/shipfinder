@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\PaymentMethodsController;
 Route::group(['prefix' => 'user'], function () {
 
     Route::get('/roles', [UserController::class, 'roles']);
+    Route::post('/phone', [UserController::class, 'checkUserExistence']);
 
     Route::post('/login', [UserController::class, 'login']);
     Route::post('/verify', [UserController::class, 'verify']);

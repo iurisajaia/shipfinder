@@ -89,6 +89,41 @@
                 }
             }
         },
+        "/api/user/phone/": {
+            "post": {
+                "tags" : ["User"],
+                "summary": "Check User existence",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "description": "User's phone number",
+                                        "example": "+1234567890"
+                                    }
+                                },
+                                "required": ["phone"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Phone checked successful"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/api/user/create/driver": {
             "post": {
                 "security": [

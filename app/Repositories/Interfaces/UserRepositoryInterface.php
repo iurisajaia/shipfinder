@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
+use App\Http\Requests\CheckUserExistenceRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\GetLoginCodeRequest;
@@ -20,4 +21,5 @@ Interface UserRepositoryInterface{
     public function verifyUser(VerifyUserRequest $request);
     public function getLoginCode(GetLoginCodeRequest $request);
     public function forgotPassword(ForgotPasswordRequest $request);
+    public function checkUserExistence(CheckUserExistenceRequest $request);
 }

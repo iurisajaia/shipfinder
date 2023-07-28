@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+use App\Http\Requests\CheckUserExistenceRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Models\PhoneOtp;
 use App\Repositories\Interfaces\UserRepositoryInterface;
@@ -104,6 +105,17 @@ class UserRepository implements  UserRepositoryInterface{
 
         return response()->json(['message' => 'Code sent successfully to ' . $user->email], 200);
     }
+
+    public function checkUserExistence(CheckUserExistenceRequest $request) : JsonResponse{
+
+        $user = User::where('phone', $request->phone)->first();
+
+        if($user) return response()->json(['message' => 'User already exists'], 401);
+
+        return response()->json(['message' => "User doesn't exists, you can use that number"], 200);
+    }
+
+
 
     public function verifyUser(VerifyUserRequest $request) : JsonResponse{
 

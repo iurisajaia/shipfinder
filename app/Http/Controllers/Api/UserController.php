@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CheckUserExistenceRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\GetLoginCodeRequest;
@@ -117,7 +118,17 @@ class UserController extends Controller
         }
     }
 
-
+    public function checkUserExistence(CheckUserExistenceRequest $request) : JsonResponse
+    {
+        try {
+            return $this->userRepository->checkUserExistence($request);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 
     public function currentUser(Request $request){
         try {

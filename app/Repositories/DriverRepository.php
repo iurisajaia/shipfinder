@@ -64,7 +64,7 @@ class DriverRepository implements  DriverRepositoryInterface {
             $this->createUser($userData, $driver , $request);
 
 
-            return response()->json(['driver' => $driver], 200);
+            return response()->json(['driver' => $driver, 'message' => 'Driver created successfully'], 200);
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()

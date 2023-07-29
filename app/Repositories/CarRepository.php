@@ -35,7 +35,7 @@ class CarRepository implements CarRepositoryInterface
     public function create(CreateCarRequest $request): JsonResponse
     {
         try {
-            $carData = $request->only(['trailer_type_id', 'payment_method_id', 'model', 'description', 'registration_number']);
+            $carData = $request->only(['trailer_type_id', 'payment_method_id', 'model', 'description', 'registration_number', 'danger']);
 
             $car = new Car([
                 ...$carData,

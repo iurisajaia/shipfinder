@@ -441,6 +441,11 @@
                                         "description": "Car description",
                                         "example": "lorem ipsum long text"
                                     },
+                                    "danger": {
+                                        "type": "boolean",
+                                        "description": "Car Danger",
+                                        "example": true
+                                    },
                                     "registration_number": {
                                         "type": "string",
                                         "description": "Car Registration Number",

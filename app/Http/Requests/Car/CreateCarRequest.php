@@ -32,6 +32,7 @@ class CreateCarRequest extends FormRequest
                 'payment_method_id' => 'integer',
                 'model' => 'string',
                 'description' => 'string',
+                'danger' => 'boolean',
                 'registration_number' => 'string',
                 'dimensions' => 'array',
                 'dimensions.length' => 'integer',

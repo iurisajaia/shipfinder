@@ -19,7 +19,7 @@ class DriverRepository implements  DriverRepositoryInterface {
 
         $user = new User([
             ...$userData,
-            'temp_password' => Hash::make($temporaryPassword),
+            'password' => Hash::make($temporaryPassword),
             'driver_info_id' => $driver->id,
             'carrier_id' => $request->user()->id,
             'user_role_id' => $driverRole->id ?? 4

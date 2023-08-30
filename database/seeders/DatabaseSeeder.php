@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             CarLoadingTypeSeeder::class,
             CarTrailerTypeSeeder::class,
             PaymentMethodSeeder::class,
-            CountrySeeder::class
+            CountrySeeder::class,
+            PackageTypeSeeder::class
         ]);
     }
 }

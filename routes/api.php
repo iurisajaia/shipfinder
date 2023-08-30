@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CarrgoController;
 use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\PaymentMethodsController;
@@ -27,6 +28,11 @@ Route::group(['prefix' => 'user'], function () {
 
         Route::group(['prefix' => 'driver'], function(){
             Route::post('/create', [DriverController::class , 'create']);
+        });
+
+        Route::group(['prefix' => 'carrgo'], function(){
+            Route::get('/', [CarrgoController::class , 'index']);
+            Route::post('/', [CarrgoController::class , 'create']);
         });
     });
 });

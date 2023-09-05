@@ -50,6 +50,38 @@ class UserRepository implements  UserRepositoryInterface{
 
     }
 
+    public function updateUser(CreateUserRequest $request) : JsonResponse{
+
+        $data = [
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'user_role_id' => $request->user_role_id
+        ];
+
+        $user = User::query()->findOrFail($request->user()->id);
+        $user->update(array_filter($data));
+
+        if(isset($request->images)){
+            foreach ($request->images as $key => $image){
+                if($request->id){
+                    $existingMedia = $user->getMedia($image['title'])->first();
+                    if ($existingMedia) {
+                        $existingMedia->delete();
+                    }
+                }
+                $user->addMediaFromRequest("images.{$key}.uri")->toMediaCollection($image['title']);
+            }
+        }
+
+        return response()->json([
+            'message' => 'User Created Successfully',
+            'user' => $user,
+        ], 200);
+
+    }
+
     public function deleteUser(int $id) : JsonResponse{
         try {
             $user = User::findOrFail($id);

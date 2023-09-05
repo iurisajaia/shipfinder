@@ -18,6 +18,7 @@ Interface UserRepositoryInterface{
     public function currentUser(Request $request);
     public function loginUser(LoginUserRequest $request);
     public function createUser(CreateUserRequest $request);
+    public function updateUser(CreateUserRequest $request);
     public function verifyUser(VerifyUserRequest $request);
     public function getLoginCode(GetLoginCodeRequest $request);
     public function forgotPassword(ForgotPasswordRequest $request);

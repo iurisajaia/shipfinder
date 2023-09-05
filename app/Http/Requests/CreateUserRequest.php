@@ -28,6 +28,7 @@ class CreateUserRequest extends FormRequest
 
         return [
             [
+                'images' => '',
                 'firstname' => 'string',
                 'lastname' => 'string',
                 'phone' => 'required|string',

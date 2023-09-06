@@ -3,6 +3,7 @@
 namespace App\Repositories;
 use App\Http\Requests\CheckUserExistenceRequest;
 use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\UpdateUserPasswordRequest;
 use App\Models\PhoneOtp;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Http\Requests\GetLoginCodeRequest;
@@ -77,6 +78,19 @@ class UserRepository implements  UserRepositoryInterface{
 
         return response()->json([
             'message' => 'User Created Successfully',
+            'user' => $user,
+        ], 200);
+
+    }
+    public function changePassword(UpdateUserPasswordRequest $request) : JsonResponse{
+
+        $user = User::query()->findOrFail($request->user()->id);
+        $user->update([
+            'password' => Hash::make($request['password'])
+        ]);
+
+        return response()->json([
+            'message' => 'Password Updated Successfully',
             'user' => $user,
         ], 200);
 

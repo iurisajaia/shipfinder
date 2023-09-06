@@ -143,6 +143,45 @@
                 }
             }
         },
+        "/api/user/change-password/": {
+            "put": {
+                "tags" : ["User"],
+                "summary": "Change User Password",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "description": "User's new password",
+                                        "example": "password"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password updated successful"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/api/user/phone/": {
             "post": {
                 "tags" : ["User"],

@@ -7,6 +7,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\GetLoginCodeRequest;
 use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\UpdateUserPasswordRequest;
 use App\Http\Requests\VerifyUserRequest;
 use Illuminate\Http\Request;
 
@@ -22,5 +23,6 @@ Interface UserRepositoryInterface{
     public function verifyUser(VerifyUserRequest $request);
     public function getLoginCode(GetLoginCodeRequest $request);
     public function forgotPassword(ForgotPasswordRequest $request);
+    public function changePassword(UpdateUserPasswordRequest $request);
     public function checkUserExistence(CheckUserExistenceRequest $request);
 }

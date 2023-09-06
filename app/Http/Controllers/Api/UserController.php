@@ -8,6 +8,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\GetLoginCodeRequest;
 use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\UpdateUserPasswordRequest;
 use App\Http\Requests\VerifyUserRequest;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -39,6 +40,18 @@ class UserController extends Controller
     {
         try {
             return $this->userRepository->updateUser($request);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function changePassword(UpdateUserPasswordRequest $request) : JsonResponse
+    {
+        try {
+            return $this->userRepository->changePassword($request);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,

@@ -163,6 +163,11 @@
                                         "type": "string",
                                         "description": "User's new password",
                                         "example": "password"
+                                    },
+                                    "old_password": {
+                                        "type": "string",
+                                        "description": "User's old password",
+                                        "example": "password"
                                     }
                                 }
                             }

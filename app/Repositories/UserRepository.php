@@ -85,6 +85,11 @@ class UserRepository implements  UserRepositoryInterface{
     public function changePassword(UpdateUserPasswordRequest $request) : JsonResponse{
 
         $user = User::query()->findOrFail($request->user()->id);
+
+        if (!Hash::check($request->input('old_password'), $user->password)) {
+            return response()->json(['error' => "Old password doesn't match"]);
+        }
+
         $user->update([
             'password' => Hash::make($request['password'])
         ]);

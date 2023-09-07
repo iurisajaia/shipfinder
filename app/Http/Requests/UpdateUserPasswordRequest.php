@@ -23,6 +23,7 @@ class UpdateUserPasswordRequest extends FormRequest
 
         return [
             [
+                'old_password' => 'required|string',
                 'password' => 'required|string',
             ]
         ];

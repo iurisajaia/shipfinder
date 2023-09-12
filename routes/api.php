@@ -35,6 +35,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::group(['prefix' => 'carrgo'], function(){
             Route::get('/', [CarrgoController::class , 'index']);
             Route::post('/', [CarrgoController::class , 'create']);
+            Route::get('/package-types', [CarrgoController::class , 'getPackageTypes']);
         });
     });
 });

@@ -34,9 +34,15 @@ class CreateCarrgoRequest extends FormRequest
                 'pick_up_date' => 'string',
                 'delivery_date' => 'string',
 
-                'contact_person_firstname' => 'string',
-                'contact_person_lastname' => 'string',
-                'contact_person_phone' => 'string',
+                'contact_info' => 'required|array',
+                'contact_info.sender' => 'required|array',
+                'contact_info.sender.*.contact_person_firstname' => 'required|string',
+                'contact_info.sender.*.contact_person_lastname' => 'required|string',
+                'contact_info.sender.*.contact_person_phone' => 'required|string',
+                'contact_info.receiver' => 'required|array',
+                'contact_info.receiver.*.contact_person_firstname' => 'required|string',
+                'contact_info.receiver.*.contact_person_lastname' => 'required|string',
+                'contact_info.receiver.*.contact_person_phone' => 'required|string',
 
                 'price' => 'integer',
                 'bidding_end_date' => 'string',

@@ -144,6 +144,7 @@ return array(
     'App\\Models\\CarLoadingType' => $baseDir . '/app/Models/CarLoadingType.php',
     'App\\Models\\CarTrailerType' => $baseDir . '/app/Models/CarTrailerType.php',
     'App\\Models\\Carrgo' => $baseDir . '/app/Models/Carrgo.php',
+    'App\\Models\\ContactInfo' => $baseDir . '/app/Models/ContactInfo.php',
     'App\\Models\\Country' => $baseDir . '/app/Models/Country.php',
     'App\\Models\\Dimension' => $baseDir . '/app/Models/Dimension.php',
     'App\\Models\\DriverInfo' => $baseDir . '/app/Models/DriverInfo.php',

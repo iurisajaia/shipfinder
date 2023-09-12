@@ -25,9 +25,7 @@ return new class extends Migration
             $table->string('pick_up_date')->nullable();
             $table->string('delivery_date')->nullable();
             // contact
-            $table->string('contact_person_firstname')->nullable();
-            $table->string('contact_person_lastname')->nullable();
-            $table->string('contact_person_phone')->nullable();
+
             // bidding
             $table->integer('price')->nullable();
             $table->string('bidding_end_date')->nullable();

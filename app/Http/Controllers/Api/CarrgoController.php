@@ -25,4 +25,8 @@ class CarrgoController extends Controller
     public function create(CreateCarrgoRequest $request): JsonResponse {
         return $this->carrgoRepository->create($request);
     }
+
+    public function getPackageTypes(): JsonResponse{
+        return $this->carrgoRepository->getPackageTypes();
+    }
 }

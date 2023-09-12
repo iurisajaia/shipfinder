@@ -885,6 +885,7 @@ class ComposerStaticInit13ea0274390bb8cd5b124d2f36e42ccb
         'App\\Models\\CarLoadingType' => __DIR__ . '/../..' . '/app/Models/CarLoadingType.php',
         'App\\Models\\CarTrailerType' => __DIR__ . '/../..' . '/app/Models/CarTrailerType.php',
         'App\\Models\\Carrgo' => __DIR__ . '/../..' . '/app/Models/Carrgo.php',
+        'App\\Models\\ContactInfo' => __DIR__ . '/../..' . '/app/Models/ContactInfo.php',
         'App\\Models\\Country' => __DIR__ . '/../..' . '/app/Models/Country.php',
         'App\\Models\\Dimension' => __DIR__ . '/../..' . '/app/Models/Dimension.php',
         'App\\Models\\DriverInfo' => __DIR__ . '/../..' . '/app/Models/DriverInfo.php',

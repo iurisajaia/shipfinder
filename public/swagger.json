@@ -689,6 +689,242 @@
             }
         },
 
+        "/api/carrgo/": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags" : ["Carrgo"],
+                "summary": "Create Carrgo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "pick_up_date": {
+                                        "type": "string",
+                                        "description": "Pick Up Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "delivery_date": {
+                                        "type": "string",
+                                        "description": "Delivery  Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "bidding_end_date": {
+                                        "type": "string",
+                                        "description": "Bidding end  Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "price": {
+                                        "type": "integer",
+                                        "description": "price",
+                                        "example": 190
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Car description",
+                                        "example": "lorem ipsum long text"
+                                    },
+                                    "from": {
+                                        "type" : "object",
+                                        "properties": {
+                                            "address" : {
+                                                "type": "string",
+                                                "description": "Address",
+                                                "example": "Tbilisi, Georgia"
+                                            },
+                                            "lat" : {
+                                                "type": "integer",
+                                                "description": "Latitude",
+                                                "example": 41.34343
+                                            },
+                                            "lng" : {
+                                                "type": "integer",
+                                                "description": "Longitude",
+                                                "example": 41.34344
+                                            }
+
+                                        }
+                                    },
+                                    "to": {
+                                        "type" : "object",
+                                        "properties": {
+                                            "address" : {
+                                                "type": "string",
+                                                "description": "Address",
+                                                "example": "Tbilisi, Georgia"
+                                            },
+                                            "lat" : {
+                                                "type": "integer",
+                                                "description": "Latitude",
+                                                "example": 41.34343
+                                            },
+                                            "lng" : {
+                                                "type": "integer",
+                                                "description": "Longitude",
+                                                "example": 41.34344
+                                            }
+
+                                        }
+                                    },
+                                    "package": {
+                                        "type" : "object",
+                                        "properties": {
+                                            "name" : {
+                                                "type": "string",
+                                                "description": "Package Name",
+                                                "example": "IDK"
+                                            },
+                                            "code" : {
+                                                "type": "string",
+                                                "description": "Package Code",
+                                                "example": "A1323B or anything"
+                                            },
+                                            "danger_status" : {
+                                                "type": "string",
+                                                "description": "Package Danger Status",
+                                                "example": "ADR 1"
+                                            },
+                                            "weight" : {
+                                                "type": "string",
+                                                "description": "Package weight",
+                                                "example": "100"
+                                            },
+                                            "height" : {
+                                                "type": "string",
+                                                "description": "Package height",
+                                                "example": "100"
+                                            },
+                                            "length" : {
+                                                "type": "string",
+                                                "description": "Package length",
+                                                "example": "100"
+                                            },
+                                            "temp" : {
+                                                "type": "string",
+                                                "description": "Package temp",
+                                                "example": "100"
+                                            },
+                                            "pcs" : {
+                                                "type": "string",
+                                                "description": "Package pcs",
+                                                "example": "100"
+                                            },
+                                            "package" : {
+                                                "type": "integer",
+                                                "description": "Package Type Id",
+                                                "example": 1
+                                            }
+
+                                        }
+                                    },
+                                    "contact_info" : {
+                                        "type" : "object",
+                                        "description" : "Package contacts array",
+                                        "properties": {
+                                            "sender" : {
+                                                "type": "array",
+                                                "example": [
+                                                    {
+                                                        "contact_person_firstname" : {
+                                                            "type" : "string",
+                                                            "example" : "John"
+                                                        },
+                                                        "contact_person_lastname" : {
+                                                            "type" : "string",
+                                                            "example" : "Doe"
+                                                        },
+                                                        "contact_person_phone" : {
+                                                            "type" : "string",
+                                                            "example" : "945532"
+                                                        }
+
+                                                    }
+                                                ]
+                                            },
+                                            "receiver" : {
+                                                "type": "array",
+                                                "example": [
+                                                    {
+                                                        "contact_person_firstname" : {
+                                                            "type" : "string",
+                                                            "example" : "John"
+                                                        },
+                                                        "contact_person_lastname" : {
+                                                            "type" : "string",
+                                                            "example" : "Doe"
+                                                        },
+                                                        "contact_person_phone" : {
+                                                            "type" : "string",
+                                                            "example" : "945532"
+                                                        }
+
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": []
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created successful"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/carrgo": {
+            "get": {
+                "tags" : ["Carrgo"],
+                "summary": "User Carrgo",
+                "responses": {
+                    "200": {
+                        "description": "Carrgos fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/carrgo/package-types": {
+            "get": {
+                "tags" : ["Carrgo"],
+                "summary": "Package Types",
+                "responses": {
+                    "200": {
+                        "description": "Package types fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+
+
+
         "/api/payment-methods": {
             "get": {
                 "tags" : ["Payment Method"],

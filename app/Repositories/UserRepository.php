@@ -61,24 +61,25 @@ class UserRepository implements  UserRepositoryInterface{
             'user_role_id' => $request->user_role_id
         ];
 
+
         $user = User::query()->findOrFail($request->user()->id);
         $user->update(array_filter($data));
 
         if(isset($request->images)){
             foreach ($request->images as $key => $image){
-                if($request->id){
                     $existingMedia = $user->getMedia($image['title'])->first();
                     if ($existingMedia) {
                         $existingMedia->delete();
                     }
-                }
                 $user->addMediaFromRequest("images.{$key}.uri")->toMediaCollection($image['title']);
             }
         }
 
+        $updatedUser = User::query()->with('media')->findOrFail($user->id);
+
         return response()->json([
             'message' => 'User Created Successfully',
-            'user' => $user,
+            'user' => $updatedUser,
         ], 200);
 
     }
@@ -241,7 +242,7 @@ class UserRepository implements  UserRepositoryInterface{
 
     public function currentUser(Request $request): JsonResponse{
         try {
-            $user = User::with(['drivers' , 'drivers.driverInfo' , 'drivers.driverInfo.media'])->findOrFail($request->user()->id);
+            $user = User::with(['drivers' , 'drivers.driverInfo' , 'drivers.driverInfo.media', 'media'])->findOrFail($request->user()->id);
             return response()->json($user, 200);
 
         }catch(Exception $e)

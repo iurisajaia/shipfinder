@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CarrgoController;
 use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\CountryController;
+use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\PaymentMethodsController;
 
 
@@ -56,3 +57,8 @@ Route::group(['prefix' => 'country'], function(){
     Route::get('/', [CountryController::class , 'index']);
 });
 
+Route::group(['prefix' => 'chat'], function(){
+    Route::get('/show/{senderId}/{receiverId}', [MessageController::class , 'show']);
+    Route::get('/{senderId}', [MessageController::class , 'index']);
+    Route::post('/', [MessageController::class , 'sendMessage']);
+});

@@ -689,7 +689,7 @@
             }
         },
 
-        "/api/carrgo/": {
+        "/api/user/carrgo/": {
             "post": {
                 "security": [
                     {
@@ -729,6 +729,10 @@
                                         "type": "string",
                                         "description": "Car description",
                                         "example": "lorem ipsum long text"
+                                    },
+                                    "date_offer" : {
+                                        "type" : "boolean",
+                                        "example" : false
                                     },
                                     "from": {
                                         "type" : "object",
@@ -815,7 +819,7 @@
                                                 "description": "Package pcs",
                                                 "example": "100"
                                             },
-                                            "package" : {
+                                            "package_type_id" : {
                                                 "type": "integer",
                                                 "description": "Package Type Id",
                                                 "example": 1
@@ -888,13 +892,30 @@
                 }
             }
         },
-        "/api/carrgo": {
+        "/api/user/carrgo": {
             "get": {
                 "tags" : ["Carrgo"],
                 "summary": "User Carrgo",
                 "responses": {
                     "200": {
                         "description": "Carrgos fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/user/carrgo/contacts": {
+            "get": {
+                "tags" : ["Carrgo"],
+                "summary": "User Contacts",
+                "responses": {
+                    "200": {
+                        "description": "Contacts fetched successfully"
                     },
                     "400": {
                         "description": "Bad request - Invalid input data"

@@ -29,4 +29,8 @@ class CarrgoController extends Controller
     public function getPackageTypes(): JsonResponse{
         return $this->carrgoRepository->getPackageTypes();
     }
+    public function getUserContacts(Request $request): JsonResponse{
+        return $this->carrgoRepository->getUserContacts($request);
+    }
+
 }

@@ -12,6 +12,7 @@ use App\Repositories\Interfaces\CarrgoRepositoryInterface;
 use App\Http\Requests\Carrgo\CreateCarrgoRequest;
 use Illuminate\Http\JsonResponse;
 use App\Models\Car;
+use Illuminate\Http\Request;
 
 
 class CarrgoRepository implements CarrgoRepositoryInterface
@@ -47,7 +48,8 @@ class CarrgoRepository implements CarrgoRepositoryInterface
                     $info = new ContactInfo([
                         ...$sender,
                         'is_sender' => true,
-                        'package_id' => $package->id
+                        'package_id' => $package->id,
+                        'user_id' => $request->user()->id
                     ]);
                     $info->save();
                 }
@@ -58,9 +60,20 @@ class CarrgoRepository implements CarrgoRepositoryInterface
                     $info = new ContactInfo([
                         ...$receiver,
                         'is_sender' => false,
-                        'package_id' => $package->id
+                        'package_id' => $package->id,
+                        'user_id' => $request->user()->id
                     ]);
                     $info->save();
+                }
+            }
+
+            if(isset($request->images)){
+                foreach ($request->images as $key => $image){
+                    $existingMedia = $carrgo->getMedia($image['title'])->first();
+                    if ($existingMedia) {
+                        $existingMedia->delete();
+                    }
+                    $carrgo->addMediaFromRequest("images.{$key}.uri")->toMediaCollection($image['title']);
                 }
             }
 
@@ -72,6 +85,11 @@ class CarrgoRepository implements CarrgoRepositoryInterface
                 'error' => $e->getMessage()
             ], $e->getCode());
         }
+    }
+
+    public function getUserContacts(Request $request): JsonResponse{
+        $contacts = ContactInfo::query()->where('user_id', $request->user()->id)->orderByDesc('created_at')->get();
+        return response()->json(['data' => $contacts]);
     }
 
 

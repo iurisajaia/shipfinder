@@ -36,6 +36,7 @@ Route::group(['prefix' => 'user'], function () {
             Route::get('/', [CarrgoController::class , 'index']);
             Route::post('/', [CarrgoController::class , 'create']);
             Route::get('/package-types', [CarrgoController::class , 'getPackageTypes']);
+            Route::get('/contacts', [CarrgoController::class , 'getUserContacts']);
         });
     });
 });

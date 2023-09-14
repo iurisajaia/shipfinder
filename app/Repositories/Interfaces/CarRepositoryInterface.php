@@ -10,4 +10,5 @@ use Illuminate\Http\Request;
 Interface CarRepositoryInterface{
     public function index(Request $request);
     public function create(CreateCarRequest $request);
+    public function getUserContacts(Request $request);
 }

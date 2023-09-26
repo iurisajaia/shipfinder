@@ -33,6 +33,9 @@ class CreateCarrgoRequest extends FormRequest
                 'to' => 'object',
                 'pick_up_date' => 'string',
                 'delivery_date' => 'string',
+                'price' => 'integer',
+                'bidding_end_date' => 'string',
+                'date_offer' => 'boolean',
 
                 'contact_info' => 'required|array',
                 'contact_info.sender' => 'required|array',
@@ -44,18 +47,15 @@ class CreateCarrgoRequest extends FormRequest
                 'contact_info.receiver.*.contact_person_lastname' => 'required|string',
                 'contact_info.receiver.*.contact_person_phone' => 'required|string',
 
-                'price' => 'integer',
-                'bidding_end_date' => 'string',
-
                 'package' => 'required|object',
                 'package.name' => 'string',
                 'package.code' => 'string',
-                'package.danger_status' => 'string',
                 'package.weight' => 'string',
                 'package.height' => 'string',
                 'package.length' => 'string',
                 'package.temp' => 'string',
                 'package.pcs' => 'string',
+                'package.danger_status_id' => 'id',
                 'package.package_type_id' => 'integer|required',
             ]
         ];

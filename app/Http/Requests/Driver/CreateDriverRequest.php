@@ -28,9 +28,9 @@ class CreateDriverRequest extends FormRequest
                 'issued_by' => 'string',
                 'date_of_issue' => 'string',
                 'serial_number' => 'string',
-                'driver_passport' => 'string',
-                'drivers_license' => 'string',
-                'firstname' => 'string',
+                'driver_passport' => 'file',
+                'drivers_license' => 'file',
+                'name' => 'string',
                 'lastname' => 'string',
                 'phone' => 'string|required',
             ]

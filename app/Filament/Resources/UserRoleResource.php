@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserRoleResource\Pages;
 use App\Filament\Resources\UserRoleResource\RelationManagers;
-use App\Models\UserRole;
+use App\Models\Role;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Concerns\Translatable;
@@ -17,7 +17,7 @@ use Filament\Tables\Columns\TextColumn;
 class UserRoleResource extends Resource
 {
     use Translatable;
-    protected static ?string $model = UserRole::class;
+    protected static ?string $model = Role::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 

@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\UserRole;
+use App\Enums\UserRolesEnum;
+use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ class UserRoleSeeder extends Seeder
         if(!DB::table('user_roles')->count()){
             $userTypes = [
                 [
-                    'id' => 1,
+                    'id' => UserRolesEnum::CARRIER_LEGAL,
                     'title' => [
                         'eng' => 'Carrier Legal'
                     ],
@@ -27,7 +28,7 @@ class UserRoleSeeder extends Seeder
                     'is_visible' => true
                 ],
                 [
-                    'id' => 2,
+                    'id' => UserRolesEnum::DRIVER,
                     'title' => [
                         'eng' => 'Carrier Physical'
                     ],
@@ -35,7 +36,7 @@ class UserRoleSeeder extends Seeder
                     'is_visible' => true
                 ],
                 [
-                    'id' => 3,
+                    'id' => UserRolesEnum::SHIPPER_LEGAL,
                     'title' => [
                         'eng' => 'Shipper Legal'
                     ],
@@ -43,7 +44,7 @@ class UserRoleSeeder extends Seeder
                     'is_visible' => true
                 ],
                 [
-                    'id' => 4,
+                    'id' => UserRolesEnum::SHIPPER_PHYSICAL,
                     'title' => [
                         'eng' => 'Shipper Physical'
                     ],
@@ -51,15 +52,7 @@ class UserRoleSeeder extends Seeder
                     'is_visible' => true
                 ],
                 [
-                    'id' => 5,
-                    'title' => [
-                        'eng' => 'Driver'
-                    ],
-                    'key' => 'driver',
-                    'is_visible' => false
-                ],
-                [
-                    'id' => 6,
+                    'id' => UserRolesEnum::ADMINISTRATOR,
                     'title' => [
                         'eng' => 'Administrator',
                     ],
@@ -67,19 +60,17 @@ class UserRoleSeeder extends Seeder
                     'is_visible' => false
                 ],
                 [
-                    'id' => 7,
+                    'id' => UserRolesEnum::MODERATOR,
                     'title' => [
                         'eng' => 'Moderator',
                     ],
                     'key' => 'moderator',
                     'is_visible' => false
                 ],
-
-
             ];
 
             foreach ($userTypes as $type){
-                UserRole::create([
+                Role::create([
                     'title' => $type['title'],
                     'key' => $type['key'],
                     'is_visible' => $type['is_visible']

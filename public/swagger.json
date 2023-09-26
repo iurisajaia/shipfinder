@@ -30,7 +30,7 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "firstname": {
+                                    "name": {
                                         "type": "string",
                                         "description": "User's name",
                                         "example": "John"
@@ -59,16 +59,6 @@
                                         "type": "integer",
                                         "description": "User's role ID",
                                         "example": 1
-                                    },
-                                    "legal_name" : {
-                                        "type": "string",
-                                        "description": "Legal name",
-                                        "example": "Re:soft"
-                                    },
-                                    "legal_id" : {
-                                        "type": "string",
-                                        "description": "Legal ID",
-                                        "example": "3133"
                                     }
                                 },
                                 "required": ["phone", "password"]
@@ -222,7 +212,7 @@
                 }
             }
         },
-        "/api/user/create/driver": {
+        "/api/user/driver/create": {
             "post": {
                 "security": [
                     {
@@ -238,7 +228,7 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "firstname": {
+                                    "name": {
                                         "type": "string",
                                         "description": "User's name",
                                         "example": "John"
@@ -654,23 +644,6 @@
                 }
             }
         },
-        "/api/car/trailer-types": {
-            "get": {
-                "tags" : ["Car"],
-                "summary": "Car Trailer Types",
-                "responses": {
-                    "200": {
-                        "description": "Trailer types fetched successfully"
-                    },
-                    "400": {
-                        "description": "Bad request - Invalid input data"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
         "/api/car/loading-types": {
             "get": {
                 "tags" : ["Car"],
@@ -689,15 +662,106 @@
             }
         },
 
-        "/api/user/carrgo/": {
+        "/api/trailer/create/": {
             "post": {
                 "security": [
                     {
                         "bearerAuth": []
                     }
                 ],
-                "tags" : ["Carrgo"],
-                "summary": "Create Carrgo",
+                "tags" : ["Trailer"],
+                "summary": "Create Trailer",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "trailer_type_id": {
+                                        "type": "integer",
+                                        "description": "Trailer Type Id",
+                                        "example": 1
+                                    },
+                                    "model": {
+                                        "type": "string",
+                                        "description": "Car Model",
+                                        "example": "Opel"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "Car description",
+                                        "example": "lorem ipsum long text"
+                                    },
+                                    "registration_number": {
+                                        "type": "string",
+                                        "description": "Car Registration Number",
+                                        "example": "A31AA34"
+                                    }
+                                },
+                                "required": []
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created successful"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/trailer": {
+            "get": {
+                "tags" : ["Trailer"],
+                "summary": "User Trailers",
+                "responses": {
+                    "200": {
+                        "description": "Cars fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/trailer/types": {
+            "get": {
+                "tags" : ["Trailer"],
+                "summary": "Trailer Types",
+                "responses": {
+                    "200": {
+                        "description": "Trailer types fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+
+
+        "/api/user/cargo/": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags" : ["Cargo"],
+                "summary": "Create Cargo",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -789,10 +853,10 @@
                                                 "description": "Package Code",
                                                 "example": "A1323B or anything"
                                             },
-                                            "danger_status" : {
+                                            "danger_status_id" : {
                                                 "type": "string",
                                                 "description": "Package Danger Status",
-                                                "example": "ADR 1"
+                                                "example": 1
                                             },
                                             "weight" : {
                                                 "type": "string",
@@ -892,10 +956,10 @@
                 }
             }
         },
-        "/api/user/carrgo": {
+        "/api/user/cargo": {
             "get": {
-                "tags" : ["Carrgo"],
-                "summary": "User Carrgo",
+                "tags" : ["Cargo"],
+                "summary": "User Cargo",
                 "responses": {
                     "200": {
                         "description": "Carrgos fetched successfully"
@@ -909,9 +973,9 @@
                 }
             }
         },
-        "/api/user/carrgo/contacts": {
+        "/api/user/cargo/contacts": {
             "get": {
-                "tags" : ["Carrgo"],
+                "tags" : ["Cargo"],
                 "summary": "User Contacts",
                 "responses": {
                     "200": {
@@ -926,9 +990,9 @@
                 }
             }
         },
-        "/api/carrgo/package-types": {
+        "/api/cargo/package-types": {
             "get": {
-                "tags" : ["Carrgo"],
+                "tags" : ["Cargo"],
                 "summary": "Package Types",
                 "responses": {
                     "200": {
@@ -943,8 +1007,23 @@
                 }
             }
         },
-
-
+        "/api/cargo/danger-statuses": {
+            "get": {
+                "tags" : ["Cargo"],
+                "summary": "Danger Statuses",
+                "responses": {
+                    "200": {
+                        "description": "Danger Statuses fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
 
         "/api/payment-methods": {
             "get": {

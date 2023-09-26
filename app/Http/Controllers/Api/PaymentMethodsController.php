@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class PaymentMethodsController extends Controller
 {
     public function index(): JsonResponse {
-        return response()->json(['data' => PaymentMethod::all()], 200);
+        $payments = PaymentMethod::query()->orderByDesc('id')->get();
+        return response()->json(['data' => $payments], 200);
     }
 }

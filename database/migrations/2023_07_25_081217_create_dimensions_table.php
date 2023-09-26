@@ -15,12 +15,15 @@ return new class extends Migration
     {
         Schema::create('dimensions', function (Blueprint $table) {
             $table->id();
-            $table->integer('car_id');
             $table->string('volume')->nullable();
             $table->string('capacity')->nullable();
             $table->integer('length')->nullable();
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
+
+            $table->unsignedBigInteger('car_id');
+            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

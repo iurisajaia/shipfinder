@@ -29,10 +29,9 @@ class CreateTrailerRequest extends FormRequest
         return [
             [
                 'id' => 'integer',
-                'number' => 'string',
-                'title' => 'string',
+                'description' => 'string',
                 'model' => 'string',
-                'identification_number' => 'string',
+                'registration_number' => 'string',
                 'trailer_type_id' => 'integer',
                 'tech_passport' => 'nullable|file|mimes:jpeg,png,gif,pdf',
             ]

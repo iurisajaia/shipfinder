@@ -19,10 +19,11 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             CarBodyTypeSeeder::class,
             CarLoadingTypeSeeder::class,
-            CarTrailerTypeSeeder::class,
+            TrailerTypeSeeder::class,
             PaymentMethodSeeder::class,
             CountrySeeder::class,
-            PackageTypeSeeder::class
+            PackageTypeSeeder::class,
+            DangerStatusSeeder::class
         ]);
     }
 }

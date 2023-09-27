@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Http\Requests\CheckUserExistenceRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\UpdateUserPasswordRequest;
+use App\Models\CarrierLegal;
 use App\Models\PhoneOtp;
 use App\Repositories\Interfaces\RoleRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
@@ -46,11 +47,21 @@ class UserRepository implements UserRepositoryInterface
             return response()->json(['error' => 'Phone number is not verified'], 404);
         }
 
+        $name = isset($request->legal) ? $request->legal['legal_name'] : $request->name;
+
         $user = User::create([
-            ...$request->except(['user_role_id']),
+            ...$request->except(['user_role_id', 'legal']),
+            'name' => $name,
             'password' => Hash::make($request['password']),
             'phone_verified_at' => now()
         ]);
+
+        if(isset($request->legal)){
+            CarrierLegal::create([
+                ...$request->legal,
+                'user_id' => $user->id
+            ]);
+        }
 
         $this->roleRepository->attach($request->user_role_id, $user);
 
@@ -68,7 +79,7 @@ class UserRepository implements UserRepositoryInterface
     {
 
         $data = [
-            'firstname' => $request->firstname,
+            'name' => $request->name,
             'lastname' => $request->lastname,
             'phone' => $request->phone,
             'email' => $request->email,

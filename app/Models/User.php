@@ -73,6 +73,11 @@ class User extends Authenticatable implements HasMedia, FilamentUser
         return $this->hasMany(Driver::class , 'carrier_id');
     }
 
+    public function carrier(): HasOne
+    {
+        return $this->hasOne(CarrierLegal::class , 'user_id');
+    }
+
 
 
 

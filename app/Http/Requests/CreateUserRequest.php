@@ -35,6 +35,9 @@ class CreateUserRequest extends FormRequest
                 'email' => 'string',
                 'user_role_id' => 'number',
                 'password' => 'required|string',
+                'legal' => 'array',
+                'legal.legal_name' => 'string',
+                'legal.legal_id' => 'string'
             ]
         ];
     }

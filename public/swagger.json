@@ -59,7 +59,24 @@
                                         "type": "integer",
                                         "description": "User's role ID",
                                         "example": 1
+                                    },
+                                    "legal" : {
+                                        "type" : "object",
+                                        "properties": {
+                                            "legal_name": {
+                                                "type": "string",
+                                                "description": "Legal Name",
+                                                "example": "Legal Name"
+                                            },
+                                            "legal_id": {
+                                                "type": "string",
+                                                "description": "Legal Id",
+                                                "example": "Legal Id"
+                                            }
+                                        }
                                     }
+
+
                                 },
                                 "required": ["phone", "password"]
                             }
@@ -854,7 +871,7 @@
                                                 "example": "A1323B or anything"
                                             },
                                             "danger_status_id" : {
-                                                "type": "string",
+                                                "type": "integer",
                                                 "description": "Package Danger Status",
                                                 "example": 1
                                             },

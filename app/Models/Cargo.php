@@ -25,5 +25,14 @@ class Cargo extends Model implements HasMedia
         return $this->belongsTo(Package::class , 'package_id');
     }
 
+    public function bids(): HasMany{
+        return $this->hasMany(Bid::class , 'cargo_id');
+    }
+
+    public function bid(): BelongsTo
+    {
+        return $this->belongsTo(Bid::class , 'bid_id');
+    }
+
 
 }

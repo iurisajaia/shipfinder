@@ -990,6 +990,23 @@
                 }
             }
         },
+        "/api/user/cargo/my": {
+            "get": {
+                "tags" : ["Cargo"],
+                "summary": "Get My Cargos",
+                "responses": {
+                    "200": {
+                        "description": "Carrgos fetched successfully"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
         "/api/user/cargo/contacts": {
             "get": {
                 "tags" : ["Cargo"],
@@ -1041,6 +1058,115 @@
                 }
             }
         },
+        "/api/user/cargo/bid/create": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags" : ["Cargo"],
+                "summary": "Create Bid On Cargo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "pick_up_date": {
+                                        "type": "string",
+                                        "description": "Pick Up Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "delivery_date": {
+                                        "type": "string",
+                                        "description": "Delivery  Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "price": {
+                                        "type": "integer",
+                                        "description": "price",
+                                        "example": 190
+                                    },
+                                    "comment": {
+                                        "type": "string",
+                                        "description": "Car description",
+                                        "example": "lorem ipsum long text"
+                                    },
+                                    "car_id" : {
+                                        "type" : "integer",
+                                        "example" : 1
+                                    },
+                                    "cargo_id" : {
+                                        "type" : "integer",
+                                        "example" : 1
+                                    }
+
+                                },
+                                "required": []
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created successful"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/user/cargo/bid/response": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags" : ["Cargo"],
+                "summary": "Create Bid On Cargo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "bid_id" : {
+                                        "type" : "integer",
+                                        "example" : 1
+                                    },
+                                    "accept" : {
+                                        "type" : "boolean",
+                                        "example" : true
+                                    }
+
+                                },
+                                "required": []
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created successful"
+                    },
+                    "400": {
+                        "description": "Bad request - Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+
 
         "/api/payment-methods": {
             "get": {

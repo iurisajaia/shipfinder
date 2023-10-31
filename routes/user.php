@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\CargoController;
 use App\Http\Controllers\Api\DriverController;
 
 Route::group(['prefix' => 'user'], function () {
@@ -24,14 +23,6 @@ Route::group(['prefix' => 'user'], function () {
 
         Route::group(['prefix' => 'driver'], function(){
             Route::post('/create', [DriverController::class , 'create']);
-        });
-
-        Route::group(['prefix' => 'cargo'], function(){
-            Route::get('/', [CargoController::class , 'index']);
-            Route::post('/', [CargoController::class , 'create']);
-            Route::get('/package-types', [CargoController::class , 'getPackageTypes']);
-            Route::get('/contacts', [CargoController::class , 'getUserContacts']);
-            Route::get('/danger-statuses', [CargoController::class , 'getDangerStatuses']);
         });
     });
 });

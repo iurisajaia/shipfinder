@@ -2,6 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Enums\BidStatusEnum;
+use App\Enums\StatusEnum;
+use App\Http\Requests\Carrgo\CreateBidRequest;
+use App\Http\Requests\Carrgo\ResponseBidRequest;
+use App\Models\Bid;
 use App\Models\Cargo;
 use App\Models\Package;
 use App\Models\PackageType;
@@ -22,6 +27,11 @@ class CargoRepository implements CargoRepositoryInterface
     public function __construct(MediaRepositoryInterface $mediaRepository)
     {
         $this->mediaRepository = $mediaRepository;
+    }
+
+    public function getMyCargos(Request $request): JsonResponse{
+        $cargos = Cargo::query()->with(['package', 'package.type', 'package.contacts', 'bids', 'bid'])->where('user_id', $request->user()->id)->orderByDesc('id')->get();
+        return response()->json(['data' => $cargos]);
     }
 
 
@@ -107,6 +117,31 @@ class CargoRepository implements CargoRepositoryInterface
         $cargo['user_id'] = $request->user()->id;
         $cargo->save();
         return $cargo;
+    }
+
+    public function createBid(CreateBidRequest $request): JsonResponse{
+        $bid = new Bid($request->all());
+        $bid['user_id'] = $request->user()->id;
+        $bid->save();
+        return response()->json(['data' => $bid], 200);
+    }
+
+    public function responseBid(ResponseBidRequest $request): JsonResponse{
+        $bid = Bid::findOrFail($request['bid_id']);
+
+        $cargo = Cargo::query()->where('id', $bid?->cargo_id)->first();
+
+        if(!$bid || !$cargo) return response()->json(['error' => 'Cannot find data'], 404);
+
+        $bid['status'] = BidStatusEnum::ACTIVE;
+        $bid->save();
+
+
+        $cargo['bid_id'] = $bid['id'];
+        $cargo['status'] = StatusEnum::ACTIVE;
+        $cargo->save();
+
+        return response()->json(['$cargo' => $cargo], 200);
     }
 
 }

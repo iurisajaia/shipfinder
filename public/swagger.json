@@ -973,10 +973,48 @@
                 }
             }
         },
-        "/api/user/cargo": {
-            "get": {
+        "/api/user/cargo/all": {
+            "post": {
                 "tags" : ["Cargo"],
                 "summary": "User Cargo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "pick_up_date": {
+                                        "type": "string",
+                                        "description": "Pick Up Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "delivery_date": {
+                                        "type": "string",
+                                        "description": "Delivery  Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "bidding_end_date": {
+                                        "type": "string",
+                                        "description": "Bidding end  Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "package_type_id": {
+                                        "type": "integer",
+                                        "description": "Package Type Id",
+                                        "example": 1
+                                    },
+                                    "traffic_area_id": {
+                                        "type": "string",
+                                        "description": "Country name",
+                                        "example": "Georgia"
+                                    }
+                                },
+                                "required": []
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Carrgos fetched successfully"
@@ -991,9 +1029,47 @@
             }
         },
         "/api/user/cargo/my": {
-            "get": {
+            "post": {
                 "tags" : ["Cargo"],
                 "summary": "Get My Cargos",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "pick_up_date": {
+                                        "type": "string",
+                                        "description": "Pick Up Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "delivery_date": {
+                                        "type": "string",
+                                        "description": "Delivery  Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "bidding_end_date": {
+                                        "type": "string",
+                                        "description": "Bidding end  Date",
+                                        "example": "2023/20/11"
+                                    },
+                                    "package_type_id": {
+                                        "type": "integer",
+                                        "description": "Package Type Id",
+                                        "example": 1
+                                    },
+                                    "traffic_area_id": {
+                                        "type": "string",
+                                        "description": "Country name",
+                                        "example": "Georgia"
+                                    }
+                                },
+                                "required": []
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Carrgos fetched successfully"

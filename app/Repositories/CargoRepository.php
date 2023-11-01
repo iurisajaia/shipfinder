@@ -12,6 +12,7 @@ use App\Models\Package;
 use App\Models\PackageType;
 use App\Models\ContactInfo;
 use App\Models\DangerStatus;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\Carrgo\CreateCarrgoRequest;
@@ -30,14 +31,54 @@ class CargoRepository implements CargoRepositoryInterface
     }
 
     public function getMyCargos(Request $request): JsonResponse{
-        $cargos = Cargo::query()->with(['package', 'package.type', 'package.contacts', 'bids', 'bid'])->where('user_id', $request->user()->id)->orderByDesc('id')->get();
-        return response()->json(['data' => $cargos]);
+        $cargos = Cargo::query()->with(['package', 'package.type', 'package.contacts', 'bids', 'bid'])->where('user_id', $request->user()->id)->orderByDesc('id');
+
+        $cargos = $this->filterCargos($request, $cargos);
+
+        return response()->json(['data' => $cargos->get()]);
     }
 
 
-    public function index(): JsonResponse{
-        $cargos = Cargo::query()->with(['package', 'package.type', 'package.contacts'])->orderByDesc('id')->get();
-        return response()->json(['data' => $cargos]);
+    public function index(Request $request): JsonResponse{
+        $cargos = Cargo::query()->with(['package', 'package.type', 'package.contacts'])->orderByDesc('id');
+
+
+        $cargos = $this->filterCargos($request, $cargos);
+
+        return response()->json(['data' => $cargos->get()]);
+    }
+
+    public function filterCargos(Request $request , $cargos){
+        if ($request->has('pick_up_date')) {
+            $pickUp = $request->input('pick_up_date');
+            $cargos->where(function ($query) use ($pickUp) {
+                $query->whereDate('pick_up_date', '<=', $pickUp);
+            });
+        }
+        if ($request->has('delivery_date')) {
+            $delivery = $request->input('delivery_date');
+            $cargos->where(function ($query) use ($delivery) {
+                $query->whereDate('delivery_date', '<=', $delivery);
+            });
+        }
+        if ($request->has('bidding_end_date')) {
+            $biddingEnd = $request->input('bidding_end_date');
+            $cargos->where(function ($query) use ($biddingEnd) {
+                $query->whereDate('bidding_end_date', '<=', $biddingEnd);
+            });
+        }
+
+        if($request->has('package_type_id')){
+            $cargos->whereHas('package', function($query) use ($request){
+                $query->where('package_type_id', $request->input('package_type_id'));
+            });
+        }
+
+        if($request->has('traffic_area')){
+            $cargos->whereJsonContains('to->country', $request->input('traffic_area'));
+        }
+
+        return $cargos;
     }
 
     public function getPackageTypes(): JsonResponse{

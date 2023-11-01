@@ -9,7 +9,7 @@ use App\Http\Requests\Carrgo\ResponseBidRequest;
 use Illuminate\Http\Request;
 
 Interface CargoRepositoryInterface{
-    public function index();
+    public function index(Request $request);
     public function getMyCargos(Request $request);
     public function getPackageTypes();
     public function create(CreateCarrgoRequest $request);

@@ -6,8 +6,8 @@ use App\Http\Controllers\Api\CargoController;
 Route::group(['prefix' => 'user'], function () {
     Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::group(['prefix' => 'cargo'], function(){
-            Route::get('/my', [CargoController::class , 'getMyCargos']);
-            Route::get('/', [CargoController::class , 'index']);
+            Route::post('/my', [CargoController::class , 'getMyCargos']);
+            Route::post('/all', [CargoController::class , 'index']);
             Route::post('/', [CargoController::class , 'create']);
             Route::get('/package-types', [CargoController::class , 'getPackageTypes']);
             Route::get('/contacts', [CargoController::class , 'getUserContacts']);

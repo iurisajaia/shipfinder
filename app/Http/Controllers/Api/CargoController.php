@@ -25,8 +25,8 @@ class CargoController extends Controller
         return $this->cargoRepository->getMyCargos($request);
     }
 
-    public function index(){
-        return $this->cargoRepository->index();
+    public function index(Request $request){
+        return $this->cargoRepository->index($request);
     }
 
     public function getPackageTypes(): JsonResponse{

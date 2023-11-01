@@ -7,6 +7,8 @@ use App\Filament\Resources\CarResource\RelationManagers;
 use App\Models\Car;
 use App\Models\DriverUserDetails;
 use App\Models\User;
+use App\Models\CarTrailerType;
+use App\Models\PaymentMethod;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
@@ -25,27 +27,22 @@ class CarResource extends Resource
 {
     protected static ?string $model = Car::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-truck';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('number')->required(),
-                TextInput::make('title'),
                 TextInput::make('model'),
-                TextInput::make('identification_number'),
-                Select::make('car_type_id')
-                    ->relationship('type', 'title')
-                    ->preload()
-                    ->required()
-                    ->reactive(),
-                Card::make([
-                    SpatieMediaLibraryFileUpload::make('tech_passport')
-                        ->multiple()
-                        ->collection('tech_passport')
-                        ->enableReordering()
-                ])
+                TextInput::make('description'),
+                Select::make('trailer_type_id')->options(CarTrailerType::pluck('title', 'id')->toArray()),
+                Select::make('payment_method_id')->options(PaymentMethod::pluck('title', 'id')->toArray()),
+                Select::make('user_id')->options(User::pluck('firstname', 'id')->toArray()),
+                TextInput::make('registration_number'),
+//                Card::make([
+//                    SpatieMediaLibraryFileUpload::make('images')->collection('images'),
+//                ])->label('Images'),
+
             ]);
     }
 
@@ -53,9 +50,12 @@ class CarResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('title'),
                 TextColumn::make('model'),
-                TextColumn::make('number'),
+                TextColumn::make('trailer_type.title')->label('Trailer Type'),
+                TextColumn::make('payment_method.title')->label('Payment Method'),
+                TextColumn::make('registration_number')->label('Registration Number'),
+                TextColumn::make('user.firstname')->label('User'),
+
             ])
             ->filters([
                 //

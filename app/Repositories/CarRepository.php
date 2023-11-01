@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Car;
+use App\Models\CarBodyType;
+use App\Models\CarLoadingType;
 use App\Models\Dimension;
 use App\Repositories\Interfaces\CarRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -12,6 +14,18 @@ use Illuminate\Http\Request;
 
 class CarRepository implements CarRepositoryInterface
 {
+
+    public function getCarBodyTypes(): JsonResponse
+    {
+        $carBodyTypes = CarBodyType::query()->orderByDesc('id')->get();
+        return response()->json(['data' => $carBodyTypes], 200);
+    }
+
+    public function getCarLoadingTypes(): JsonResponse
+    {
+        $carLoadingTypes = CarLoadingType::query()->orderByDesc('id')->get();
+        return response()->json(['data' => $carLoadingTypes], 200);
+    }
 
     public function index(Request $request): JsonResponse{
         try {
@@ -25,7 +39,7 @@ class CarRepository implements CarRepositoryInterface
             return response()->json([
                 'data' => $cars
             ], 200);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
             ], $e->getCode());
@@ -35,7 +49,7 @@ class CarRepository implements CarRepositoryInterface
     public function create(CreateCarRequest $request): JsonResponse
     {
         try {
-            $carData = $request->only(['trailer_type_id', 'payment_method_id', 'model', 'description', 'registration_number', 'danger']);
+            $carData = $request->only(['car_body_type_id' , 'payment_method_id', 'model', 'description', 'registration_number', 'danger']);
 
             $car = new Car([
                 ...$carData,
@@ -46,7 +60,6 @@ class CarRepository implements CarRepositoryInterface
             if(isset($request['drivers']) && count($request['drivers'])){
                 $car->drivers()->sync($request['drivers']);
             }
-
             if(isset($request['body_types']) && count($request['body_types'])){
                 $car->body_types()->sync($request['body_types']);
             }
@@ -56,8 +69,10 @@ class CarRepository implements CarRepositoryInterface
             if(isset($request['countries']) && count($request['countries'])){
                 $car->countries()->sync($request['countries']);
             }
-
-
+            if(isset($request['trailer_id'])){
+                $car->trailer_id = $request['trailer_id'];
+                $car->save();
+            }
 
 
 

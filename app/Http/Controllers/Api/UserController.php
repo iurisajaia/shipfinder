@@ -24,10 +24,44 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function create(CreateUserRequest $request) : JsonResponse
+    public function roles() : JsonResponse{
+        try {
+            return response()->json($this->userRepository->getUserRoles());
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function delete($id) : JsonResponse
     {
         try {
-            return $this->userRepository->createUser($request);
+            return $this->userRepository->deleteUser($id);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function currentUser(Request $request): JsonResponse{
+        try {
+            return $this->userRepository->currentUser($request);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function login(LoginUserRequest $request) : JsonResponse
+    {
+        try {
+            return $this->userRepository->loginUser($request);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -48,33 +82,10 @@ class UserController extends Controller
         }
     }
 
-    public function changePassword(UpdateUserPasswordRequest $request) : JsonResponse
+    public function create(CreateUserRequest $request) : JsonResponse
     {
         try {
-            return $this->userRepository->changePassword($request);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
-        }
-    }
-
-    public function delete() : JsonResponse
-    {
-        try {
-            return $this->userRepository->deleteUser();
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
-        }
-    }
-
-    public function roles() : JsonResponse{
-        try {
-            return response()->json($this->userRepository->getUserRoles());
+            return $this->userRepository->createUser($request);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -107,10 +118,10 @@ class UserController extends Controller
         }
     }
 
-    public function login(LoginUserRequest $request) : JsonResponse
+    public function forgotPassword(ForgotPasswordRequest $request) : JsonResponse
     {
         try {
-            return $this->userRepository->loginUser($request);
+            return $this->userRepository->forgotPassword($request);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -119,10 +130,10 @@ class UserController extends Controller
         }
     }
 
-    public function forgotPassword(ForgotPasswordRequest $request) : JsonResponse
+    public function changePassword(UpdateUserPasswordRequest $request) : JsonResponse
     {
         try {
-            return $this->userRepository->forgotPassword($request);
+            return $this->userRepository->changePassword($request);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -143,15 +154,5 @@ class UserController extends Controller
         }
     }
 
-    public function currentUser(Request $request){
-        try {
-            return $this->userRepository->currentUser($request);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
-        }
-    }
 
 }

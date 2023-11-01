@@ -28,24 +28,28 @@ class CreateCarRequest extends FormRequest
 
         return [
             [
-                'trailer_type_id' => 'integer',
-                'payment_method_id' => 'integer',
                 'model' => 'string',
                 'description' => 'string',
                 'danger' => 'boolean',
                 'registration_number' => 'string',
+
+                'payment_method_id' => 'integer',
+                'car_body_type_id' => 'integer',
+                'trailer_id' => 'integer',
+
                 'dimensions' => 'array',
                 'dimensions.length' => 'integer',
                 'dimensions.width' => 'integer',
                 'dimensions.height' => 'integer',
                 'dimensions.volume' => 'string',
                 'dimensions.capacity' => 'string',
-                'body_types' => 'array',
-                'body_types.*' => 'integer',
+
                 'loading_types' => 'array',
                 'loading_types.*' => 'integer',
+
                 'countries' => 'array',
                 'countries.*' => 'integer',
+
                 'drivers' => 'array',
                 'drivers.*' => 'integer',
 

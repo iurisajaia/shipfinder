@@ -29,12 +29,15 @@ class CreateUserRequest extends FormRequest
         return [
             [
                 'images' => '',
-                'firstname' => 'string',
+                'name' => 'string',
                 'lastname' => 'string',
                 'phone' => 'required|string',
                 'email' => 'string',
                 'user_role_id' => 'number',
                 'password' => 'required|string',
+                'legal' => 'array',
+                'legal.legal_name' => 'string',
+                'legal.legal_id' => 'string'
             ]
         ];
     }

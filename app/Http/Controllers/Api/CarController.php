@@ -30,15 +30,11 @@ class CarController extends Controller
     }
 
     public function getCarBodyTypes(): JsonResponse {
-        return response()->json(['data' => CarBodyType::all()], 200);
-    }
-
-    public function getCarTrailerTypes(): JsonResponse {
-        return response()->json(['data' => CarTrailerType::all()], 200);
+        return $this->carRepository->getCarBodyTypes();
     }
 
     public function getCarLoadingTypes(): JsonResponse {
-        return response()->json(['data' => CarLoadingType::all()], 200);
+        return $this->carRepository->getCarLoadingTypes();
     }
 
 

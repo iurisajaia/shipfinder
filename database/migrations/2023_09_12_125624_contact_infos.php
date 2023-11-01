@@ -19,8 +19,12 @@ return new class extends Migration
             $table->string('contact_person_lastname')->nullable();
             $table->string('contact_person_phone')->nullable();
             $table->boolean('is_sender')->default(true)->nullable();
+
             $table->unsignedBigInteger('package_id');
             $table->foreign('package_id')->references('id')->on('packages')->onDelete('cascade');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

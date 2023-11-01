@@ -3,11 +3,17 @@
 namespace App\Providers;
 
 use App\Repositories\CarRepository;
-use App\Repositories\CarrgoRepository;
+use App\Repositories\CargoRepository;
 use App\Repositories\ChatRepository;
 use App\Repositories\Interfaces\CarRepositoryInterface;
-use App\Repositories\Interfaces\CarrgoRepositoryInterface;
+use App\Repositories\Interfaces\CargoRepositoryInterface;
 use App\Repositories\Interfaces\ChatRepositoryInterface;
+use App\Repositories\Interfaces\MediaRepositoryInterface;
+use App\Repositories\Interfaces\RoleRepositoryInterface;
+use App\Repositories\Interfaces\TrailerRepositoryInterface;
+use App\Repositories\MediaRepository;
+use App\Repositories\RoleRepository;
+use App\Repositories\TrailerRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\DriverRepository;
 use Illuminate\Support\ServiceProvider;
@@ -26,8 +32,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryInterface::class , UserRepository::class);
         $this->app->bind(DriverRepositoryInterface::class , DriverRepository::class);
         $this->app->bind(CarRepositoryInterface::class , CarRepository::class);
-        $this->app->bind(CarrgoRepositoryInterface::class , CarrgoRepository::class);
+        $this->app->bind(CargoRepositoryInterface::class , CargoRepository::class);
         $this->app->bind(ChatRepositoryInterface::class , ChatRepository::class);
+        $this->app->bind(RoleRepositoryInterface::class , RoleRepository::class);
+        $this->app->bind(TrailerRepositoryInterface::class , TrailerRepository::class);
+        $this->app->bind(MediaRepositoryInterface::class , MediaRepository::class);
     }
 
     /**

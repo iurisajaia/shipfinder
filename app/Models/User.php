@@ -56,29 +56,27 @@ class User extends Authenticatable implements HasMedia, FilamentUser
 
     protected $appends = ['phone_is_verified'];
 
+
     public function getPhoneIsVerifiedAttribute()
     {
         return !is_null($this->phone_verified_at);
     }
 
 
-    public function role(): BelongsTo
-    {
-        return $this->belongsTo(UserRole::class, 'user_role_id');
+
+    public function roles() {
+        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
     }
 
     public function drivers(): HasMany
     {
-        return $this->hasMany(User::class , 'carrier_id');
+        return $this->hasMany(Driver::class , 'carrier_id');
     }
 
-    public function driverInfo(): HasOne
+    public function carrier(): HasOne
     {
-        return $this->hasOne(DriverInfo::class , 'id' , 'driver_info_id');
+        return $this->hasOne(CarrierLegal::class , 'user_id');
     }
-
-
-
 
 
 

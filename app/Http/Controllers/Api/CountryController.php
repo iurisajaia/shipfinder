@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class CountryController extends Controller
 {
     public function index(): JsonResponse {
-        return response()->json(['data' => Country::all()->groupBy('continent')]);
+        $countries = Country::query()->orderByDesc('id')->get();
+        return response()->json(['data' => $countries]);
     }
 }

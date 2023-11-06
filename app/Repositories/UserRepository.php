@@ -273,7 +273,7 @@ class UserRepository implements UserRepositoryInterface
     public function currentUser(Request $request): JsonResponse
     {
         try {
-            $user = User::with([...$this->roleRepository->getRelationsByUserId($request->user()->id), 'media'])->findOrFail($request->user()->id);
+            $user = User::with([...$this->roleRepository->getRelationsByUserId($request->user()->id), 'media', 'roles'])->findOrFail($request->user()->id);
             return response()->json($user, 200);
 
         } catch (Exception $e) {

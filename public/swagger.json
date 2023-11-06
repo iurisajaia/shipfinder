@@ -1004,7 +1004,7 @@
                                         "description": "Package Type Id",
                                         "example": 1
                                     },
-                                    "traffic_area_id": {
+                                    "traffic_area": {
                                         "type": "string",
                                         "description": "Country name",
                                         "example": "Georgia"
@@ -1059,7 +1059,7 @@
                                         "description": "Package Type Id",
                                         "example": 1
                                     },
-                                    "traffic_area_id": {
+                                    "traffic_area": {
                                         "type": "string",
                                         "description": "Country name",
                                         "example": "Georgia"

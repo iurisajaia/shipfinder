@@ -27,7 +27,9 @@ class RoleRepository implements  RoleRepositoryInterface {
 
         $roles = $user->roles->pluck('id')->toArray();
 
-        if(in_array(UserRolesEnum::CARRIER_LEGAL->value, $roles)) return ['drivers', 'drivers.user', 'drivers.media', 'carrier'];
+        if(in_array(UserRolesEnum::CARRIER_LEGAL->value, $roles)) return ['drivers', 'drivers.user', 'drivers.media', 'carrier', 'roles'];
+
+        if(in_array(UserRolesEnum::SHIPPER_LEGAL->value, $roles)) return ['carrier', 'roles'];
 
         return [];
     }

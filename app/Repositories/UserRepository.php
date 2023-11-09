@@ -13,6 +13,7 @@ use App\Http\Requests\GetLoginCodeRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\VerifyUserRequest;
 use App\Http\Requests\LoginUserRequest;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Role;

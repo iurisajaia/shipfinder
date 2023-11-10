@@ -134,6 +134,7 @@ class CargoRepository implements CargoRepositoryInterface
                 'data' => $response
             ]);
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return response()->json([
                 'error' => $e->getMessage()
             ], $e->getCode());
